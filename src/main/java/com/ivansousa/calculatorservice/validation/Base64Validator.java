@@ -8,7 +8,7 @@ import javax.validation.ConstraintValidatorContext;
 public class Base64Validator implements ConstraintValidator<Base64String, String> {
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
-        if (value == null || value.isBlank())
+        if (value == null || value.equals(""))
             return true;
 
         try {
