@@ -2,6 +2,7 @@ package com.ivansousa.calculatorservice.controller.exception;
 
 import javax.validation.ConstraintViolationException;
 
+import com.ivansousa.calculatorservice.calculator.InvalidExpressionException;
 import com.ivansousa.calculatorservice.controller.model.ErrorResponse;
 
 import org.springframework.core.Ordered;
@@ -21,6 +22,13 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
             WebRequest request) {
         String message = ex.getConstraintViolations().stream().findFirst().get().getMessage();
         ErrorResponse error = new ErrorResponse(message);
+
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(InvalidExpressionException.class)
+    public ResponseEntity<Object> handleInvalidExpressionException(InvalidExpressionException ex, WebRequest request) {
+        ErrorResponse error = new ErrorResponse(ex.getMessage());
 
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }

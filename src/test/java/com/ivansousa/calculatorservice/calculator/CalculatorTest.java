@@ -1,6 +1,7 @@
 package com.ivansousa.calculatorservice.calculator;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -12,6 +13,16 @@ public class CalculatorTest {
 
     public CalculatorTest() {
         this.calculator = new Calculator(9, RoundingMode.HALF_UP);
+    }
+
+    @Test
+    public void evaluate_EmptyExpression_ThrowsInvalidExpressionException() throws Exception {
+        assertThrows(InvalidExpressionException.class, () -> calculator.evaluate(""));
+    }
+
+    @Test
+    public void evaluate_InvalidExpression_ThrowsInvalidExpressionException() throws Exception {
+        assertThrows(InvalidExpressionException.class, () -> calculator.evaluate("::';"));
     }
 
     @Test

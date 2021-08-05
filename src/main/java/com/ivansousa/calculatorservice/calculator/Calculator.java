@@ -3,6 +3,7 @@ package com.ivansousa.calculatorservice.calculator;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Stack;
+import java.util.regex.Pattern;
 
 import lombok.AllArgsConstructor;
 
@@ -11,7 +12,11 @@ public class Calculator {
     private int scale;
     private RoundingMode roundingMode;
 
-    public BigDecimal evaluate(String exp) {
+    public BigDecimal evaluate(String exp) throws InvalidExpressionException {
+        boolean validExpression = Pattern.matches("[ .0-9\\+\\-\\*/\\(\\)]*", exp);
+        if (!validExpression || exp.isBlank())
+            throw new InvalidExpressionException();
+
         char[] chars = exp.toCharArray();
 
         Stack<BigDecimal> values = new Stack<>();
