@@ -14,7 +14,7 @@ public class Calculator {
 
     public BigDecimal evaluate(String exp) throws InvalidExpressionException {
         boolean validExpression = Pattern.matches("[ .0-9\\+\\-\\*/\\(\\)]*", exp);
-        if (!validExpression || exp.isBlank())
+        if (!validExpression || exp.equals(""))
             throw new InvalidExpressionException();
 
         char[] chars = exp.toCharArray();
