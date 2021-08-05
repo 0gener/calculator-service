@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 import java.util.Base64;
 
 import com.ivansousa.calculatorservice.calculator.Calculator;
+import com.ivansousa.calculatorservice.calculator.InvalidExpressionException;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,5 +60,18 @@ public class CalculusControllerTest {
                 .andDo(MockMvcResultHandlers.print()).andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.error").value(false))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.result").value(BigDecimal.TEN));
+    }
+
+    @Test
+    public void calculate_QueryInvalidExpression_BadRequest() throws Exception {
+        String query = "Ojo6OjsnOzsn";
+        String input = new String(Base64.getDecoder().decode(query));
+
+        when(calculator.evaluate(input)).thenThrow(new InvalidExpressionException());
+
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/calculus").queryParam("query", query))
+                .andDo(MockMvcResultHandlers.print()).andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.error").value(true))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("invalid expression"));
     }
 }
