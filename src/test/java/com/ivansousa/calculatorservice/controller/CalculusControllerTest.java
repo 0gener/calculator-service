@@ -5,7 +5,7 @@ import static org.mockito.Mockito.when;
 import java.math.BigDecimal;
 import java.util.Base64;
 
-import com.ivansousa.calculatorservice.util.Calculator;
+import com.ivansousa.calculatorservice.calculator.Calculator;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +53,7 @@ public class CalculusControllerTest {
         String query = "MTAgKyAxMDAgKiAoMTAgKiAwKQ==";
         String input = new String(Base64.getDecoder().decode(query));
 
-        when(calculator.parse(input)).thenReturn(BigDecimal.TEN);
+        when(calculator.evaluate(input)).thenReturn(BigDecimal.TEN);
 
         this.mockMvc.perform(MockMvcRequestBuilders.get("/calculus").queryParam("query", query))
                 .andDo(MockMvcResultHandlers.print()).andExpect(MockMvcResultMatchers.status().isOk())

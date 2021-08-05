@@ -5,8 +5,8 @@ import java.util.Base64;
 
 import javax.validation.constraints.NotBlank;
 
+import com.ivansousa.calculatorservice.calculator.Calculator;
 import com.ivansousa.calculatorservice.controller.model.CalculateResponse;
-import com.ivansousa.calculatorservice.util.Calculator;
 import com.ivansousa.calculatorservice.validation.Base64String;
 
 import org.springframework.http.HttpStatus;
@@ -30,7 +30,7 @@ public class CalculusController {
     public ResponseEntity<CalculateResponse> calculate(
             @RequestParam(name = "query", required = false) @NotBlank(message = "query must not be null or blank") @Base64String(message = "query must be a valid base64 string") String query) {
         String input = new String(Base64.getDecoder().decode(query));
-        BigDecimal result = calculator.parse(input);
+        BigDecimal result = calculator.evaluate(input);
         CalculateResponse responseEntity = new CalculateResponse(result);
 
         return new ResponseEntity<>(responseEntity, HttpStatus.OK);
