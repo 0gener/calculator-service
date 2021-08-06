@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  calculator-service:
+    build: .
+    ports: 
+      - 8080:8080
+    restart: always
+    environment: 
+      - CALCULATOR_SCALE=9
+      - CALCULATOR_ROUNDING_MODE=HALF_UP
