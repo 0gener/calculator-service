@@ -115,4 +115,9 @@ public class CalculatorTest {
 
         assertEquals(new BigDecimal("-132.888888888"), result);
     }
+
+    @Test
+    public void evaluate_ZeroDivision_ThrowsArithmeticException() throws Exception {
+        assertThrows(ArithmeticException.class, () -> calculator.evaluate("10/0"));
+    }
 }

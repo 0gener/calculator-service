@@ -74,4 +74,17 @@ public class CalculusControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.error").value(true))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("invalid expression"));
     }
+
+    @Test
+    public void calculate_QueryZeroDivison_BadRequest() throws Exception {
+        String query = "MTAvMA==";
+        String input = new String(Base64.getDecoder().decode(query));
+
+        when(calculator.evaluate(input)).thenThrow(new ArithmeticException("cannot divide by zero"));
+
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/calculus").queryParam("query", query))
+                .andDo(MockMvcResultHandlers.print()).andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.error").value(true))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("cannot divide by zero"));
+    }
 }
