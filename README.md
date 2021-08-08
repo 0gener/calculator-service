@@ -31,4 +31,5 @@ Calculator Service is a simple webservice with only one endpoint that performs a
 <!-- CI/CD -->
 ## CI/CD
 As you can see from the badges at the top of this README.me file, this project is using **Travis CI** for continuous integration and **codecov** to share the coverage report.
-It is also integrated with **Heroku** for when all the CI/CD jobs succeed, it automatically deploys the project and can the accessible [here](https://ogener-calculator-service.herokuapp.com).
+It is also integrated with **Heroku**. When all the CI/CD jobs succeed, it automatically deploys the project and can the accessible [here](https://ogener-calculator-service.herokuapp.com).
+
